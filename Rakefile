@@ -17,6 +17,8 @@ GEMSPEC = Gem::Specification.load("rustybars.gemspec")
 
 RbSys::ExtensionTask.new("rustybars", GEMSPEC) do |ext|
   ext.lib_dir = "lib/rustybars"
+  ext.cross_compile = true
+  ext.cross_platform = %w[x86_64-linux x86_64-darwin arm64-darwin aarch64-linux]
 end
 
 task default: %i[compile spec rubocop]
