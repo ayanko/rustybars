@@ -14,14 +14,9 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 3.0.0"
   spec.required_rubygems_version = ">= 3.3.11"
 
-  spec.files = Dir.chdir(__dir__) do
-    `git ls-files -z`.split("\x0").reject do |f|
-      (File.expand_path(f) == __FILE__) ||
-        f.start_with?(*%w[bin/ test/ spec/ features/ .git .github appveyor Gemfile])
-    end
-  end
+  spec.files = Dir["lib/**/*.rb", "ext/**/*.{rs,toml,lock,rb}"]
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
-  spec.extensions = ["ext/rustybars/Cargo.toml"]
+  spec.extensions = ["ext/rustybars/extconf.rb"]
 end
