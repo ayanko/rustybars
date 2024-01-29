@@ -4,12 +4,11 @@ RSpec.describe Rustybars::Engine do
   let(:engine) { described_class.new(**options) }
 
   let(:options) { {} }
+  let(:template) { "Hello {{name}}!" }
+  let(:variables) { '{"name":"John Doe"}' }
 
   describe "#render" do
     subject { engine.render(template, variables) }
-
-    let(:template) { "Hello {{name}}!" }
-    let(:variables) { '{"name":"John Doe"}' }
 
     context "invalid template" do
       let(:template) { "{{" }
@@ -58,6 +57,31 @@ RSpec.describe Rustybars::Engine do
             Error rendering "Unnamed template" line 1, col 7: Failed to access variable in strict mode Some("name")
           MESSAGE
         end
+      end
+    end
+  end
+
+  describe "#compile" do
+    subject { engine.compile(template) }
+
+    specify do
+      expect(subject).to be_a(Rustybars::CompiledTemplate)
+      expect(subject.render(variables)).to eq("Hello John Doe!")
+    end
+
+    context "invalid template" do
+      let(:template) { "Hello {{}}" }
+
+      specify do
+        expect { subject }.to raise_error(Rustybars::CompileError, <<~MESSAGE)
+          Template error: invalid handlebars syntax.
+              --> Template error in "Unnamed":1:9
+               |
+             0 | Hello {{}}
+               |---------^
+               |
+               = reason: invalid handlebars syntax.
+        MESSAGE
       end
     end
   end
