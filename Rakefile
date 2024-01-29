@@ -40,6 +40,11 @@ RSpec::Core::RakeTask.new(:spec)
 
 RuboCop::RakeTask.new
 
+desc "Run benchmark"
+task :bench do
+  require_relative "benchmarks/bench"
+end
+
 task build: :compile
 
 task default: %i[compile spec rubocop]

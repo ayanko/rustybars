@@ -49,6 +49,17 @@ template.render({another_name: 'Bob'}.to_json)
 # =>  Error rendering "Unnamed template" line 1, col 7: Failed to access variable in strict mode Some("name") (Rustybars::RenderError)
 ```
 
+## Benchmark
+
+```
+$ bundle exec rake bench
+                                     user     system      total        real
+inline                           0.280195   0.000401   0.280596 (  0.280849)
+reuse engine                     0.277403   0.000131   0.277534 (  0.277735)
+reuse template                   0.029096   0.000035   0.029131 (  0.029158)
+using 10 ruby threads            0.000311   0.000189   0.000500 (  0.000466)
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
