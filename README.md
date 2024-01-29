@@ -14,10 +14,39 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 ## Usage
 
+### Basic
+
 ```ruby
+Rustybars::Engine.new.render('Hello {{name}}!', {name: 'John Doe'}.to_json)
+```
 
-Rustybars.render('Hello {{name}}!', {name: 'John Doe'}.to_json)
+### Re-use engine
 
+```ruby
+hbs = Rustybars::Engine.new
+hbs.render('Hello {{name}}!', {name: 'John Doe'}.to_json)
+```
+
+### Re-use compiled template
+
+```ruby
+hbs = Rustybars::Engine.new
+template = hbs.compile('Hello {{name}}!')
+template.render({name: 'Alice'}.to_json)
+# => "Hello Alice!"
+template.render({name: 'Bob'}.to_json)
+# => "Hello Bob!"
+```
+
+### Strict mode
+
+```ruby
+hbs = Rustybars::Engine.new(strict_mode: true)
+template = hbs.compile('Hello {{name}}!')
+template.render({name: 'Alice'}.to_json)
+# => "Hello Alice!"
+template.render({another_name: 'Bob'}.to_json)
+# =>  Error rendering "Unnamed template" line 1, col 7: Failed to access variable in strict mode Some("name") (Rustybars::RenderError)
 ```
 
 ## Development
