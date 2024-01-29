@@ -1,9 +1,13 @@
 ## [Unreleased]
 
-## [0.2.0] - 2024-01-29
+### Changed
+
+- Upgrade handlebars crate to v5.1.1
+
+## [v0.2.0] - 2024-01-29
 
 - Enhance api with `Rustybars::Engine` and `Rustybars::CompiledTemplate`
 
-## [0.1.0] - 2024-01-18
+## [v0.1.0] - 2024-01-18
 
 - Initial release
